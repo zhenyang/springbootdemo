@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty name="dir" source="log.dir"/>
+    <springProperty name="tw_log_level" source="tw.log.level"/>
+    <springProperty name="root_log_level" source="root.log.level"/>
+
+    <!--Appenders-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${dir}/boot.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--Loggers-->
+    <logger name="com.tw" level="${tw_log_level}" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!--Root logger-->
+    <root level="${root_log_level}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
